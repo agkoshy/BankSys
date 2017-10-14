@@ -1,12 +1,10 @@
 package Bank;
 
-public class CreditAccount extends CheckingAccount {
+public class CreditAccount {
 	
-	private CheckingAccount check = new CheckingAccount();
 	private double balance;
 	public CreditAccount(){
-		super();
-		this.balance = check.getBalance(balance);
+		
 	}
 	public double withdrawAmount() {
 		
