@@ -9,6 +9,7 @@ public class CheckingAccount
 	private String user;
 	private int SIN;
 	private Date date;
+	private final String TYPE = "Chequeing;";
 	
 	public CheckingAccount()
 	{
@@ -30,35 +31,35 @@ public class CheckingAccount
 
 	public void withdrawAmount(double amount) {
 		this.balance = this.balance - amount;
-		record.add(new AccountActivity(this.getSIN(), date.getTime(), "Withdraw" , amount));
+		record.add(new AccountActivity(this.getSIN(), date.getTime(), TYPE + "Withdraw" , amount));
 	}
 	
 	public void depositAmount(double amount) {
 		this.balance = this.balance + amount;
-		record.add(new AccountActivity(this.getSIN(), date.getTime(), "Deposit" , amount));
+		record.add(new AccountActivity(this.getSIN(), date.getTime(), TYPE + "Deposit" , amount));
 	}
 	
 	public void createAccount(String user, int SIN) {
 		CheckingAccount acc = new CheckingAccount(user, SIN);
-		record.add(new AccountActivity(this.getSIN(), date.getTime(), "Creation" , 0));
+		record.add(new AccountActivity(this.getSIN(), date.getTime(), TYPE + "Creation" , 0));
 	}
 	
 	//user initiated
 	public void cancelAccount() {
 		
-		record.add(new AccountActivity(this.getSIN(), date.getTime(), "Cancellation" , 0));
+		record.add(new AccountActivity(this.getSIN(), date.getTime(), TYPE + "Cancellation" , 0));
 	}
 	
 	//bank initiated
 	public void suspendAccount() {
 		
-		record.add(new AccountActivity(this.getSIN(), date.getTime(), "Suspension" , 0));
+		record.add(new AccountActivity(this.getSIN(), date.getTime(), TYPE + "Suspension" , 0));
 	}
 	
 	//user initiated
 	public void reactivateAccount() {
 		
-		record.add(new AccountActivity(this.getSIN(), date.getTime(), "Reactivation" , 0));
+		record.add(new AccountActivity(this.getSIN(), date.getTime(), TYPE + "Reactivation" , 0));
 	}
 	
 	public double getBalance() {
@@ -68,7 +69,7 @@ public class CheckingAccount
 	//bank initiated
 	public void terminateAccount() {
 		
-		record.add(new AccountActivity(this.getSIN(), date.getTime(), "Termination" , 0));
+		record.add(new AccountActivity(this.getSIN(), date.getTime(), TYPE + "Termination" , 0));
 	}
 	
 	public int setOverdraftOption() {
@@ -130,7 +131,7 @@ public class CheckingAccount
 	}
 	public void setLimit(double amount) {
 		
-		record.add(new AccountActivity(this.getSIN(), date.getTime(), "New Limit" , amount));
+		record.add(new AccountActivity(this.getSIN(), date.getTime(), TYPE + "New Limit" , amount));
 	}
 	
 	public void transferAmount(int amount, CreditAccount acc) {
