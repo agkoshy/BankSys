@@ -5,10 +5,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 
 public class AccountActivity {
 	
 	private static final String FILENAME = "accountLog.txt";
+	
+	private Date date;
 
 	public static void accountLog() {
 
@@ -21,27 +24,27 @@ public class AccountActivity {
 	 * records with the same SIN any record with an earlier Date and Time will
 	 * be ordered before any record with a later Date and Time.
 	 */
-	public static User[] sortAccountLog(User[] set) {
+	public static User[] sortAccountLog(String[] recordSet) {
 		int temp;
-		for (int i = 1; i < set.length; i++)
+		for (int i = 1; i < recordSet.length; i++)
 		{
 			for (int j = i; j > 0; j--)
 			{
-				if (set[j].getSIN() < set[j-1].getSIN())
+				if (recordSet[j].getSIN() < recordSet[j-1].getSIN())
 				{
-					temp = set[j].getSIN();
-					set[j] = set [j-1].getSIN();
+					temp = recordSet[j].getSIN();
+					recordSet[j] = recordSet [j-1].getSIN();
 					set[j-1].getSIN() = temp;
 				}
-				else if(set[j].getSIN() == set[j-1].getSIN())
+				else if(recordSet[j].getSIN() == recordSet[j-1].getSIN())
 				{
-					temp = set[j].getDate();
-					set[j] = set [j-1].getDate();
+					temp = recordSet[j].getDate();
+					recordSet[j] = recordSet [j-1].getDate();
 					set[j-1].getDate() = temp;
 				}
 			}
 		}
-		return set;
+		return recordSet;
 	}
 
 	/*

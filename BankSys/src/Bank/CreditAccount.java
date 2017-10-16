@@ -3,6 +3,7 @@ package Bank;
 public class CreditAccount {
 	
 	private double balance;
+	
 	public CreditAccount(){
 		
 	}
