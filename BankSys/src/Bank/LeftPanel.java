@@ -23,10 +23,12 @@ public class LeftPanel extends JPanel{
 	private JList<AccountActivity> accList = new JList<>();
 	private DefaultListModel<AccountActivity> listModel = new DefaultListModel<>();
 	JScrollPane scrollPane = new JScrollPane();
+	JTextArea textArea = new JTextArea();
 	private GUI gui;
 	
 	public LeftPanel(GUI gui) {
-		super(new GridLayout(1,1));	
+		super();	
+		textArea.setSize(400,1000);
 		accList.setModel(listModel);
 		scrollPane.setViewportView(accList);
 		scrollPane.setMaximumSize(this.getPreferredSize());
