@@ -13,7 +13,7 @@ public class RightPanel extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 6783424917586519882L;
 
 	private JButton btnUser = new JButton("New User");
-	private JButton btnSin = new JButton("Social Insurance Number");
+	private JButton btnDay = new JButton("Next Day");
 	private JButton btnAccNew = new JButton("New Account");
 	private JButton btnDeposit = new JButton("Deposit");
 	private JButton btnWithdraw = new JButton("Withdraw");
@@ -31,7 +31,7 @@ public class RightPanel extends JPanel implements ActionListener{
 		super(new GridLayout(15,1));
 		
 		btnUser.setFont(new Font(FONT_FACE, Font.PLAIN, FONT_SIZE));
-		btnSin.setFont(new Font(FONT_FACE, Font.PLAIN, FONT_SIZE));
+		btnDay.setFont(new Font(FONT_FACE, Font.PLAIN, FONT_SIZE));
 		btnAccNew.setFont(new Font(FONT_FACE, Font.PLAIN, FONT_SIZE));
 		btnDeposit.setFont(new Font(FONT_FACE, Font.PLAIN, FONT_SIZE));
 		btnWithdraw.setFont(new Font(FONT_FACE, Font.PLAIN, FONT_SIZE));
@@ -41,17 +41,17 @@ public class RightPanel extends JPanel implements ActionListener{
 		btnMonth.setFont(new Font(FONT_FACE, Font.PLAIN, FONT_SIZE));
 		
 		add(btnUser);
-		add(btnSin);
 		add(btnAccNew);
 		add(btnDeposit);
 		add(btnWithdraw);
 		add(btnSuspend);
 		add(btnCancel);
 		add(btnReactivate);
+		add(btnDay);
 		add(btnMonth);
 		
-		btnUser.addActionListener(this);
-		btnSin.addActionListener(this);
+		btnUser.addActionListener(new User(gui));
+		btnDay.addActionListener(this);
 		btnAccNew.addActionListener(this);
 		btnDeposit.addActionListener(this);
 		btnWithdraw.addActionListener(this);
@@ -62,10 +62,44 @@ public class RightPanel extends JPanel implements ActionListener{
 		
 		this.setMaximumSize(this.getPreferredSize());
 		
-		this.gui = gui;
+		this.setAccNew(false);
+		this.setDeposit(false);
+		this.setWithdraw(false);
+		this.setCancel(false);
+		this.setSuspend(false);
+		this.setReactivate(false);
+		this.setDay(false);
+		this.setMonth(false);
+		
+		this.gui = gui;		
+		
+	}
+	
+	public void setAccNew(boolean status) {
+		btnAccNew.setEnabled(status);
+	}
+	
+	public void setDeposit(boolean status) {
+		btnDeposit.setEnabled(status);
+	}
+	public void setWithdraw(boolean status) {
+		btnWithdraw.setEnabled(status);
+	}
+	public void setSuspend(boolean status) {
+		btnSuspend.setEnabled(status);
+	}
+	public void setCancel(boolean status) {
+		btnCancel.setEnabled(status);
+	}
+	public void setReactivate(boolean status) {
+		btnReactivate.setEnabled(status);
+	}
+	public void setDay(boolean status) {
+		btnDay.setEnabled(status);
+	}
 
-		
-		
+	public void setMonth(boolean status) {
+		btnMonth.setEnabled(status);
 	}
 
 	@Override
