@@ -1,24 +1,29 @@
 package Bank;
 
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
+import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class AccountActivity {
 	
 	private static final String FILENAME = "accountLog.txt";
 	private int SIN;
-	private long time;
+	private Date date;
 	private String action;
 	private double amount;
+	
+	/*
+	 * Constructor
+	 */
 
-	public AccountActivity(int SIN, long time, String action, double amount) {
+	public AccountActivity(int SIN, Date date, String action, double amount) {
 		this.SIN = SIN;
-		this.time = time;
+		this.date = date;
 		this.action = action;
 		this.amount = amount;
 	}
@@ -35,6 +40,8 @@ public class AccountActivity {
 	 * smaller SIN will be ordered before any record with a larger SIN, and for
 	 * records with the same SIN any record with an earlier Date and Time will
 	 * be ordered before any record with a later Date and Time.
+	 * 
+	 * Utilizes ArrayList and Collections package
 	 */
 	public static ArrayList<AccountActivity> sortAccountLog(ArrayList<AccountActivity> recordSet) {
 		AccountActivity temp;
@@ -50,7 +57,7 @@ public class AccountActivity {
 				}
 				else if(recordSet.get(j).getSIN() == recordSet.get(j-1).getSIN())
 				{
-					if(recordSet.get(j).getDate() < recordSet.get(j-1).getDate())
+					if(recordSet.get(j).getLongDate() < recordSet.get(j-1).getLongDate())
 					{
 						temp = recordSet.get(j);
 						recordSet.set(j, recordSet.get(j-1));
@@ -61,10 +68,19 @@ public class AccountActivity {
 		}
 		return recordSet;
 	}
-
-	private long getDate() {
-		return this.time;
+	
+	/*
+	 * Returns time
+	 */
+	
+	private long getLongDate()
+	{
+		return this.date.getTime();
 	}
+	
+	/*
+	 * Returns SIN
+	 */
 
 	private int getSIN() {
 		return this.SIN;
@@ -75,6 +91,8 @@ public class AccountActivity {
 	 * according to the rules in the document
 	 * /cs/course/2011E/CIBC_Overdraft_Protection_Service_Addendum.pdf and Rule
 	 * 1 and Rule 2 for credit accounts above.
+	 * 
+	 * When invoked, searches through accountLog for End of Day processes and act
 	 */
 	public static void processAccountLogEndOfDay(ArrayList<AccountActivity> accountLog)
 	{
@@ -96,6 +114,8 @@ public class AccountActivity {
 	 * according to the rules in the document
 	 * /cs/course/2011E/CIBC_Overdraft_Protection_Service_Addendum.pdf and Rule
 	 * 1 and Rule 2 for credit accounts above.
+	 * 
+	 * When invoked, searches through accountLog for End of Month processes and act
 	 */
 	public static void processAccountLogEndOfMonth(ArrayList<AccountActivity> accountLog)
 	{
@@ -112,15 +132,28 @@ public class AccountActivity {
 		}
 	}
 
-	// save the accountLog to a file.
-	public static void saveAccountLog(String[] content, Path file) {
-		
+	/*
+	 * Save accountLog to file
+	 */
+	
+	public static void saveAccountLog(ArrayList<AccountActivity> accountLog) throws IOException {
+		FileWriter writer = new FileWriter(FILENAME);
+		PrintWriter pwriter = new PrintWriter(writer);
+		for (AccountActivity e: accountLog)
+		{
+			pwriter.printf("%-15s%-30s%-15s%-15d", e.SIN, e.date, e.action, e.amount);
+		}
+		pwriter.close();
 	}
 
-	// retrieve the previously saved accountLog from a file.
-	public static Path retrieveAccountLog() {
-		Path file = Paths.get("accountLog.txt");
-		return file;
+	/* 
+	 * retrieve the previously saved accountLog from a file.
+	 */
+	
+	public static List<String> retrieveAccountLog() throws IOException
+	{
+		List<String> log = Files.readAllLines(Paths.get(FILENAME));
+		return log;
 	}
 
 }

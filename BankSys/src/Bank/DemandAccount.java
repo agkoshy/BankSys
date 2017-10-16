@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DemandAccount {
+	CheckingAccount cheq;
+	CreditAccount cred;
 	double balance;
 	private Date date;
 	private final String TYPE = "Demand/";
@@ -18,8 +20,8 @@ public class DemandAccount {
 		return this.balance;
 	}
 
-	public void depositAmount(double amount) {
+	public void depositAmount(int SIN, double amount) {
 		this.balance = this.balance + amount;
-		record.add(new AccountActivity(0, date.getTime(), TYPE + "Deposit" , amount));
+		record.add(new AccountActivity(SIN, date, TYPE + "Deposit" , amount));
 	}
 }
