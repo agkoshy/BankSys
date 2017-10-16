@@ -4,9 +4,12 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.NumberFormat;
 
 import javax.swing.*;
-public class RightPanel extends JPanel implements ActionListener{
+public class RightPanel extends JPanel implements ActionListener, PropertyChangeListener{
 	/**
 	 * 
 	 */
@@ -23,6 +26,13 @@ public class RightPanel extends JPanel implements ActionListener{
 	private JButton btnMonth = new JButton("Next Month");
 
 	private GUI gui;
+	private CheckingAccount check = new CheckingAccount();
+	private CreditAccount credit;
+	private DemandAccount demand;
+	User user;
+	
+
+    //private NumberFormat paymentFormat;
 	
 	private static final String FONT_FACE = "Arial";
 	private static final int FONT_SIZE = 12;
@@ -63,7 +73,7 @@ public class RightPanel extends JPanel implements ActionListener{
 		this.setMaximumSize(this.getPreferredSize());
 		
 		this.setAccNew(false);
-		this.setDeposit(false);
+		this.setDeposit(true);
 		this.setWithdraw(false);
 		this.setCancel(false);
 		this.setSuspend(false);
@@ -72,6 +82,14 @@ public class RightPanel extends JPanel implements ActionListener{
 		this.setMonth(false);
 		
 		this.gui = gui;		
+		//Checks to see which account has been chosen, creates an instance of chosen account
+		if(User.checkOne.getState()) {
+			check = new CheckingAccount();
+		} else if(User.checkTwo.getState()) {
+			credit = new CreditAccount();
+		}
+		
+		demand = new DemandAccount();
 		
 	}
 	
@@ -101,9 +119,86 @@ public class RightPanel extends JPanel implements ActionListener{
 	public void setMonth(boolean status) {
 		btnMonth.setEnabled(status);
 	}
+	public void depositBtn() {
+		JPanel panel = new JPanel(new GridLayout(0, 1, 5, 5)); 
+		JLabel lblAccounts = new JLabel("Accounts: ");
+		JLabel lblBalance = new JLabel("Amount: ");
+		JTextField txtBalance = new JTextField(5);
+		int amount = 10000;
+		String[] accounts = new String[] {"Checking Account", "Credit Account", "Demand Account"};
+		
+		JComboBox<String> accList = new JComboBox<>(accounts);
+		
+		/*JFormattedTextField num = new JFormattedTextField(paymentFormat);
+		num.setValue(new Integer(amount));
+		num.setColumns(10);*/
+
+		panel.add(lblAccounts);
+		panel.add(accList);
+		panel.add(lblBalance);
+		panel.add(txtBalance);
+		int result = JOptionPane.showConfirmDialog(null, panel, "Deposit Account",
+				JOptionPane.OK_CANCEL_OPTION);
+		/*
+		if(accList.getSelectedIndex() == 0) {
+			txtBalance.setText(Double.toString(check.getBalance()));
+		} else if(accList.getSelectedIndex() == 1) {
+		    txtBalance.setText(Double.toString(credit.getBalance()));
+		} else if(accList.getSelectedIndex() == 2) {
+			txtBalance.setText(Double.toString(demand.getBalance()));
+		}*/
+		if(result == JOptionPane.OK_OPTION) {
+			if(accList.getSelectedIndex() == 0) {
+				check.depositAmount(Double.valueOf(txtBalance.getText()));
+				System.out.println(check.getBalance());
+			} else if(accList.getSelectedIndex() == 1) {
+				credit.depositAmount(Double.valueOf(txtBalance.getText()));
+			} else if(accList.getSelectedIndex() == 2) {
+				demand.depositAmount(Double.valueOf(txtBalance.getText()));
+			}
+		}
+		
+
+	}
+	
+	public void withdrawBtn() {
+		JPanel panel = new JPanel(new GridLayout(0, 1, 5, 5)); 
+		JLabel lblAccounts = new JLabel("Accounts: ");
+		JLabel lblBalance = new JLabel("Amount: ");
+		JTextField txtBalance = new JTextField(5);
+		int amount = 0;
+		String[] accounts = new String[] {"Checking Account", "Credit Account", "Demand Account"};
+		
+		JComboBox<String> accList = new JComboBox<>(accounts);
+		
+		JFormattedTextField num = new JFormattedTextField();
+		num.setValue(new Integer(amount));
+		num.setColumns(10);
+		num.addPropertyChangeListener("value", this);
+
+		panel.add(lblAccounts);
+		panel.add(accList);
+		panel.add(lblBalance);
+		panel.add(num);
+		int result = JOptionPane.showConfirmDialog(null, panel, "Withdraw Amount",
+				JOptionPane.OK_CANCEL_OPTION);
+		{
+			if(result == JOptionPane.OK_OPTION) {
+				
+			}
+		}
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		System.out.println(e.getSource() == btnDeposit);
+		if(e.getSource().equals(btnDeposit)) {
+			depositBtn();
+		}
+	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void propertyChange(PropertyChangeEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 }
