@@ -20,8 +20,8 @@ public class User implements ActionListener{
 	private JLabel lblAcc = new JLabel("Choose Account(s): ");
 	private JTextField txtUser = new JTextField(5);
 
-	public static Checkbox checkOne = new Checkbox("Checking Account");
-	public static Checkbox checkTwo = new Checkbox("Credit Account");
+	private Checkbox checkOne = new Checkbox("Checking Account");
+	private Checkbox checkTwo = new Checkbox("Credit Account");
 	
 	private JPanel myPanel = new JPanel(new GridLayout(0, 1, 5, 5));
 
@@ -96,6 +96,5 @@ public class User implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		create();
-	}
-	
+	}	
 }

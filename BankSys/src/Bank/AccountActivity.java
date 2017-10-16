@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class AccountActivity {
@@ -35,25 +36,25 @@ public class AccountActivity {
 	 * records with the same SIN any record with an earlier Date and Time will
 	 * be ordered before any record with a later Date and Time.
 	 */
-	public static AccountActivity[] sortAccountLog(AccountActivity[] recordSet) {
+	public static ArrayList<AccountActivity> sortAccountLog(ArrayList<AccountActivity> recordSet) {
 		AccountActivity temp;
-		for (int i = 1; i < recordSet.length; i++)
+		for (int i = 1; i < recordSet.size(); i++)
 		{
 			for (int j = i; j > 0; j--)
 			{
-				if (recordSet[j].getSIN() < recordSet[j-1].getSIN())
+				if (recordSet.get(j).getSIN() < recordSet.get(j-1).getSIN())
 				{
-					temp = recordSet[j];
-					recordSet[j] = recordSet [j-1];
-					recordSet[j-1] = temp;
+					temp = recordSet.get(j);
+					recordSet.set(j, recordSet.get(j-1));
+					recordSet.set(j-1, temp);
 				}
-				else if(recordSet[j].getSIN() == recordSet[j-1].getSIN())
+				else if(recordSet.get(j).getSIN() == recordSet.get(j-1).getSIN())
 				{
-					if(recordSet[j].getDate() < recordSet[j-1].getDate())
+					if(recordSet.get(j).getDate() < recordSet.get(j-1).getDate())
 					{
-						temp = recordSet[j];
-						recordSet[j] = recordSet[j-1];
-						recordSet[j-1] = temp;
+						temp = recordSet.get(j);
+						recordSet.set(j, recordSet.get(j-1));
+						recordSet.set(j-1, temp);
 					}
 				}
 			}
@@ -61,14 +62,12 @@ public class AccountActivity {
 		return recordSet;
 	}
 
-	private int getDate() {
-		// TODO Auto-generated method stub
-		return 0;
+	private long getDate() {
+		return this.time;
 	}
 
 	private int getSIN() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.SIN;
 	}
 
 	/*
@@ -77,15 +76,18 @@ public class AccountActivity {
 	 * /cs/course/2011E/CIBC_Overdraft_Protection_Service_Addendum.pdf and Rule
 	 * 1 and Rule 2 for credit accounts above.
 	 */
-	public static void processAccountLogEndOfDay(User[] accountLog)
+	public static void processAccountLogEndOfDay(ArrayList<AccountActivity> accountLog)
 	{
-		String x;
-		
-		// process withdraws, deposits, user cancellation, reactivation
-		
-		for(int i = 0; i < accountLog.length; i++)
+		for(AccountActivity e: accountLog)
 		{
-			
+			if (e.action == "")
+			{
+				
+			}
+			if (e.action == "etc")
+			{
+				
+			}
 		}
 	}
 
@@ -95,8 +97,19 @@ public class AccountActivity {
 	 * /cs/course/2011E/CIBC_Overdraft_Protection_Service_Addendum.pdf and Rule
 	 * 1 and Rule 2 for credit accounts above.
 	 */
-	public static void processAccountLogEndOfMonth(){
-
+	public static void processAccountLogEndOfMonth(ArrayList<AccountActivity> accountLog)
+	{
+		for(AccountActivity e: accountLog)
+		{
+			if (e.action == "")
+			{
+				
+			}
+			if (e.action == "etc")
+			{
+				
+			}
+		}
 	}
 
 	// save the accountLog to a file.

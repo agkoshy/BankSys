@@ -35,25 +35,30 @@ public class CheckingAccount
 	
 	public void depositAmount(double amount) {
 		this.balance = this.balance + amount;
+		record.add(new AccountActivity(this.getSIN(), date.getTime(), "Deposit" , amount));
 	}
 	
 	public void createAccount(String user, int SIN) {
 		CheckingAccount acc = new CheckingAccount(user, SIN);
+		record.add(new AccountActivity(this.getSIN(), date.getTime(), "Creation" , 0));
 	}
 	
 	//user initiated
 	public void cancelAccount() {
 		
+		record.add(new AccountActivity(this.getSIN(), date.getTime(), "Cancellation" , 0));
 	}
 	
 	//bank initiated
 	public void suspendAccount() {
 		
+		record.add(new AccountActivity(this.getSIN(), date.getTime(), "Suspension" , 0));
 	}
 	
 	//user initiated
 	public void reactivateAccount() {
 		
+		record.add(new AccountActivity(this.getSIN(), date.getTime(), "Reactivation" , 0));
 	}
 	
 	public double getBalance() {
@@ -63,14 +68,15 @@ public class CheckingAccount
 	//bank initiated
 	public void terminateAccount() {
 		
+		record.add(new AccountActivity(this.getSIN(), date.getTime(), "Termination" , 0));
 	}
 	
 	public int setOverdraftOption() {
 		
 		System.out.println("Choose between No Overdraft Protection(1), Pay Per Use Overdraft Protection(2)"
 				+ "or Monthly Fixed Fee Overdraft Protection(3).");
-		int n = 0;
-		String y = "";
+		int n = read.nextInt();
+		String y = read.nextLine();
 		System.out.println("Enter an option: " + n);
 		if(n == 1)
 		{
@@ -122,8 +128,9 @@ public class CheckingAccount
 		return n;
 		
 	}
-	public void setLimit() {
+	public void setLimit(double amount) {
 		
+		record.add(new AccountActivity(this.getSIN(), date.getTime(), "New Limit" , amount));
 	}
 	
 	public void transferAmount(int amount, CreditAccount acc) {
