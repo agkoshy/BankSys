@@ -8,6 +8,7 @@ public class CheckingAccount
 	private double balance;
 	private String user;
 	private int SIN;
+	private Date date;
 	
 	public CheckingAccount()
 	{
@@ -21,6 +22,7 @@ public class CheckingAccount
 		this.balance = 0;
 	}
 
+	ArrayList<AccountActivity> record = new ArrayList<AccountActivity>();
 
 	public int getSIN() {
 		return SIN;
@@ -28,6 +30,7 @@ public class CheckingAccount
 
 	public void withdrawAmount(double amount) {
 		this.balance = this.balance - amount;
+		record.add(new AccountActivity(this.getSIN(), date.getTime(), "Withdraw" , amount));
 	}
 	
 	public void depositAmount(double amount) {

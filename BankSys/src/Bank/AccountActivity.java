@@ -10,10 +10,23 @@ import java.util.Date;
 public class AccountActivity {
 	
 	private static final String FILENAME = "accountLog.txt";
+	private int SIN;
+	private long time;
+	private String action;
+	private double amount;
+
+	public AccountActivity(int SIN, long time, String action, double amount) {
+		this.SIN = SIN;
+		this.time = time;
+		this.action = action;
+		this.amount = amount;
+	}
 
 	public static void accountLog() {
 
 	}
+	
+	AccountActivity[] event = new AccountActivity[3];
 
 	/*
 	 * use the Insertion Sort algorithm to sort all the records in the
@@ -22,8 +35,8 @@ public class AccountActivity {
 	 * records with the same SIN any record with an earlier Date and Time will
 	 * be ordered before any record with a later Date and Time.
 	 */
-	public static User[] sortAccountLog(User[] recordSet) {
-		User temp;
+	public static AccountActivity[] sortAccountLog(AccountActivity[] recordSet) {
+		AccountActivity temp;
 		for (int i = 1; i < recordSet.length; i++)
 		{
 			for (int j = i; j > 0; j--)
@@ -48,13 +61,23 @@ public class AccountActivity {
 		return recordSet;
 	}
 
+	private int getDate() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	private int getSIN() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	/*
 	 * process records in the accountLog at the end of each business day
 	 * according to the rules in the document
 	 * /cs/course/2011E/CIBC_Overdraft_Protection_Service_Addendum.pdf and Rule
 	 * 1 and Rule 2 for credit accounts above.
 	 */
-	public static void processAccountLogEndOfDay(User[][] accountLog)
+	public static void processAccountLogEndOfDay(User[] accountLog)
 	{
 		String x;
 		
@@ -72,9 +95,7 @@ public class AccountActivity {
 	 * /cs/course/2011E/CIBC_Overdraft_Protection_Service_Addendum.pdf and Rule
 	 * 1 and Rule 2 for credit accounts above.
 	 */
-	public static void processAccountLogEndOfMonth() throws IOException {
-		
-		// process suspension, termination, certain conditions
+	public static void processAccountLogEndOfMonth(){
 
 	}
 

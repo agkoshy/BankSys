@@ -11,6 +11,7 @@ import javax.swing.*;
 public class User implements ActionListener{
 	
 	Random ran = new Random();
+	public Date date;
 	
 	CheckingAccount check;
 	CreditAccount credit;
@@ -68,7 +69,7 @@ public class User implements ActionListener{
 				// Generate Account
 				
 				if (checkOne.getState() == true)
-				{;
+				{
 					check.createAccount(txtUser.getText(), SIN);
 				}
 				
@@ -95,6 +96,16 @@ public class User implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		create();
+	}
+
+	public int getSIN() {
+		// TODO Auto-generated method stub
+		return SIN;
+	}
+
+	public int getDate() {
+		// TODO Auto-generated method stub
+		return Date;
 	}
 	
 	
