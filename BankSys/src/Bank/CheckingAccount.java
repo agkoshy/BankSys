@@ -69,8 +69,8 @@ public class CheckingAccount
 		
 		System.out.println("Choose between No Overdraft Protection(1), Pay Per Use Overdraft Protection(2)"
 				+ "or Monthly Fixed Fee Overdraft Protection(3).");
-		int n = read.nextInt();
-		String y = read.nextLine();
+		int n = 0;
+		String y = "";
 		System.out.println("Enter an option: " + n);
 		if(n == 1)
 		{
