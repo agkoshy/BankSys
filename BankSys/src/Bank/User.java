@@ -62,20 +62,19 @@ public class User implements ActionListener{
 			else
 			{
 				// Generates User SIN
-				// int USIN = (int) (100000000 + (ran.nextFloat() * 900000000));
+				
+				int SIN = (int) (100000000 + (ran.nextFloat() * 900000000));
 				
 				// Generate Account
 				
 				if (checkOne.getState() == true)
-				{
-					int USIN = (int) (100000000 + (ran.nextFloat() * 900000000));
-					check.createAccount(txtUser.getText(), USIN);
+				{;
+					check.createAccount(txtUser.getText(), SIN);
 				}
 				
 				if (checkTwo.getState() == true)
 				{
-					int USIN = (int) (100000000 + (ran.nextFloat() * 900000000));
-					credit.createAccount(txtUser.getText(), USIN);
+					credit.createAccount(txtUser.getText(), SIN);
 				}
 				
 				// Enables buttons to true only after the user initializes
