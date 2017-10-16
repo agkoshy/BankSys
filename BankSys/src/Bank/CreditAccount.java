@@ -1,14 +1,14 @@
 package Bank;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class CreditAccount {
 	
 	private double balance;
-	private String user;
 	private int SIN;
-	private Date date;
+	private Instant timestamp;
 	private final String TYPE = "Credit/";
 	
 	public CreditAccount(){
@@ -17,7 +17,6 @@ public class CreditAccount {
 	
 	public CreditAccount(String user, int SIN)
 	{
-		this.user = user;
 		this.SIN = SIN;
 		this.balance = 0;
 	}
@@ -30,35 +29,35 @@ public class CreditAccount {
 
 	public void withdrawAmount(double amount) {
 		this.balance = this.balance - amount;
-		record.add(new AccountActivity(this.getSIN(), date, TYPE + "Withdraw" , amount));
+		record.add(new AccountActivity(this.getSIN(), timestamp, TYPE + "Withdraw" , amount));
 	}
 	
 	public void depositAmount(double amount) {
 		this.balance = this.balance + amount;
-		record.add(new AccountActivity(this.getSIN(), date, TYPE + "Deposit" , amount));
+		record.add(new AccountActivity(this.getSIN(), timestamp, TYPE + "Deposit" , amount));
 	}
 	
 	public void createAccount(String user, int SIN) {
-		CheckingAccount acc = new CheckingAccount(user, SIN);
-		record.add(new AccountActivity(this.getSIN(), date, TYPE + "Creation" , 0));
+		new CheckingAccount(user, SIN);
+		record.add(new AccountActivity(this.getSIN(), timestamp, TYPE + "Creation" , 0));
 	}
 	
 	//user initiated
 	public void cancelAccount() {
 		
-		record.add(new AccountActivity(this.getSIN(), date, TYPE + "Cancellation" , 0));
+		record.add(new AccountActivity(this.getSIN(), timestamp, TYPE + "Cancellation" , 0));
 	}
 	
 	//bank initiated
 	public void suspendAccount() {
 		
-		record.add(new AccountActivity(this.getSIN(), date, TYPE + "Suspension" , 0));
+		record.add(new AccountActivity(this.getSIN(), timestamp, TYPE + "Suspension" , 0));
 	}
 	
 	//user initiated
 	public void reactivateAccount() {
 		
-		record.add(new AccountActivity(this.getSIN(), date, TYPE + "Reactivation" , 0));
+		record.add(new AccountActivity(this.getSIN(), timestamp, TYPE + "Reactivation" , 0));
 	}
 	
 	public double getBalance() {
@@ -68,7 +67,7 @@ public class CreditAccount {
 	//bank initiated
 	public void terminateAccount() {
 		
-		record.add(new AccountActivity(this.getSIN(), date, TYPE + "Termination" , 0));
+		record.add(new AccountActivity(this.getSIN(), timestamp, TYPE + "Termination" , 0));
 	}
 	
 	public int setOverdraftOption() {
@@ -130,7 +129,7 @@ public class CreditAccount {
 	}
 	public void setLimit(double amount) {
 		
-		record.add(new AccountActivity(this.getSIN(), date, TYPE + "New Limit" , amount));
+		record.add(new AccountActivity(this.getSIN(), timestamp, TYPE + "New Limit" , amount));
 	}
 	
 	public void transferAmount(int amount, CreditAccount acc) {

@@ -5,15 +5,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AccountActivity {
 	
 	private static final String FILENAME = "accountLog.txt";
 	private int SIN;
-	private Date date;
+	private Instant timestamp;
 	private String action;
 	private double amount;
 	
@@ -21,9 +21,9 @@ public class AccountActivity {
 	 * Constructor
 	 */
 
-	public AccountActivity(int SIN, Date date, String action, double amount) {
+	public AccountActivity(int SIN, Instant timestamp, String action, double amount) {
 		this.SIN = SIN;
-		this.date = date;
+		this.timestamp = timestamp;
 		this.action = action;
 		this.amount = amount;
 	}
@@ -75,7 +75,7 @@ public class AccountActivity {
 	
 	private long getLongDate()
 	{
-		return this.date.getTime();
+		return this.timestamp.toEpochMilli();
 	}
 	
 	/*
@@ -141,7 +141,7 @@ public class AccountActivity {
 		PrintWriter pwriter = new PrintWriter(writer);
 		for (AccountActivity e: accountLog)
 		{
-			pwriter.printf("%-15s%-30s%-15s%-15d", e.SIN, e.date, e.action, e.amount);
+			pwriter.printf("%-15s%-30s%-15s%-15d", e.SIN, e.timestamp.toString(), e.action, e.amount);
 		}
 		pwriter.close();
 	}

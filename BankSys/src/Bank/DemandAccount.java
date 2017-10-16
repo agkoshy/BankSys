@@ -1,13 +1,13 @@
 package Bank;
 
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class DemandAccount {
 	CheckingAccount cheq;
 	CreditAccount cred;
 	double balance;
-	private Date date;
+	private Instant timestamp;
 	private final String TYPE = "Demand/";
 	
 	public DemandAccount() {
@@ -22,6 +22,6 @@ public class DemandAccount {
 
 	public void depositAmount(int SIN, double amount) {
 		this.balance = this.balance + amount;
-		record.add(new AccountActivity(SIN, date, TYPE + "Deposit" , amount));
+		record.add(new AccountActivity(SIN, timestamp, TYPE + "Deposit" , amount));
 	}
 }
