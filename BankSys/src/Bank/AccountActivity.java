@@ -10,8 +10,6 @@ import java.util.Date;
 public class AccountActivity {
 	
 	private static final String FILENAME = "accountLog.txt";
-	
-	private Date date;
 
 	public static void accountLog() {
 
@@ -24,23 +22,26 @@ public class AccountActivity {
 	 * records with the same SIN any record with an earlier Date and Time will
 	 * be ordered before any record with a later Date and Time.
 	 */
-	public static User[] sortAccountLog(String[] recordSet) {
-		int temp;
+	public static User[] sortAccountLog(User[] recordSet) {
+		User temp;
 		for (int i = 1; i < recordSet.length; i++)
 		{
 			for (int j = i; j > 0; j--)
 			{
 				if (recordSet[j].getSIN() < recordSet[j-1].getSIN())
 				{
-					temp = recordSet[j].getSIN();
-					recordSet[j] = recordSet [j-1].getSIN();
-					set[j-1].getSIN() = temp;
+					temp = recordSet[j];
+					recordSet[j] = recordSet [j-1];
+					recordSet[j-1] = temp;
 				}
 				else if(recordSet[j].getSIN() == recordSet[j-1].getSIN())
 				{
-					temp = recordSet[j].getDate();
-					recordSet[j] = recordSet [j-1].getDate();
-					set[j-1].getDate() = temp;
+					if(recordSet[j].getDate() < recordSet[j-1].getDate())
+					{
+						temp = recordSet[j];
+						recordSet[j] = recordSet[j-1];
+						recordSet[j-1] = temp;
+					}
 				}
 			}
 		}
