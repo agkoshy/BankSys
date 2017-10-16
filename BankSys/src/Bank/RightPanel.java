@@ -167,7 +167,7 @@ public class RightPanel extends JPanel implements ActionListener, PropertyChange
 		JLabel lblBalance = new JLabel("Amount: ");
 		JTextField txtBalance = new JTextField(5);
 		int amount = 0;
-		String[] accounts = new String[] {"Checking Account", "Credit Account", "Demand Account"};
+		String[] accounts = new String[] {"Checking Account", "Credit Account"};
 		
 		JComboBox<String> accList = new JComboBox<>(accounts);
 		
@@ -184,7 +184,12 @@ public class RightPanel extends JPanel implements ActionListener, PropertyChange
 				JOptionPane.OK_CANCEL_OPTION);
 		{
 			if(result == JOptionPane.OK_OPTION) {
-				
+				if(accList.getSelectedIndex() == 0) {
+					check.withdrawAmount(Double.valueOf(txtBalance.getText()));
+					System.out.println(check.getBalance());
+				} else if(accList.getSelectedIndex() == 1) {
+					credit.withdrawAmount(Double.valueOf(txtBalance.getText()));
+				}
 			}
 		}
 	}

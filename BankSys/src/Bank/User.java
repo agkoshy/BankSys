@@ -97,16 +97,5 @@ public class User implements ActionListener{
 		// TODO Auto-generated method stub
 		create();
 	}
-
-	public int getSIN() {
-		// TODO Auto-generated method stub
-		return SIN;
-	}
-
-	public int getDate() {
-		// TODO Auto-generated method stub
-		return Date;
-	}
-	
 	
 }
