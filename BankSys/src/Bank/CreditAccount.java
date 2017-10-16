@@ -3,21 +3,30 @@ package Bank;
 public class CreditAccount {
 	
 	private double balance;
+	private String user;
+	private int SIN;
 	
 	public CreditAccount(){
 		
 	}
-	public double withdrawAmount() {
-		
-		return this.balance;
+	
+	public CreditAccount(String user, int SIN)
+	{
+		this.user = user;
+		this.SIN = SIN;
+		this.balance = 0;
 	}
 	
-	public void depositAmount(double balance) {
-		this.balance = balance;
+	public void withdrawAmount(double amount) {
+		this.balance = this.balance - amount;
 	}
 	
-	public void createAccount() {
-		
+	public void depositAmount(double amount) {
+		this.balance = this.balance + amount;
+	}
+	
+	public void createAccount(String user, int SIN) {
+		CreditAccount acc =  new CreditAccount(user, SIN);
 	}
 	
 	public void cancelAccount() {
@@ -47,7 +56,8 @@ public class CreditAccount {
 		
 	}
 	
-	public void transferAmount() {
-		
+	public void transferAmount(int amount, CheckingAccount acc) {
+		this.withdrawAmount(amount);
+		acc.depositAmount(amount);
 	}
 }

@@ -54,17 +54,16 @@ public class AccountActivity {
 	 * /cs/course/2011E/CIBC_Overdraft_Protection_Service_Addendum.pdf and Rule
 	 * 1 and Rule 2 for credit accounts above.
 	 */
-	public static void processAccountLogEndOfDay() throws IOException {
-		String fileloc = retrieveAccountLog().toString();
+	public static void processAccountLogEndOfDay(User[][] accountLog)
+	{
+		String x;
 		
-		BufferedWriter writer = null;
-		String x = "";
+		// process withdraws, deposits, user cancellation, reactivation
 		
-		writer = new BufferedWriter(new FileWriter(fileloc, true));
-		
-		writer.write(x);
-		writer.close();
-		
+		for(int i = 0; i < accountLog.length; i++)
+		{
+			
+		}
 	}
 
 	/*
@@ -74,15 +73,8 @@ public class AccountActivity {
 	 * 1 and Rule 2 for credit accounts above.
 	 */
 	public static void processAccountLogEndOfMonth() throws IOException {
-		String fileloc = retrieveAccountLog().toString();
 		
-		BufferedWriter writer = null;
-		String x = "";
-		
-		writer = new BufferedWriter(new FileWriter(fileloc, true));
-		
-		writer.write(x);
-		writer.close();
+		// process suspension, termination, certain conditions
 
 	}
 

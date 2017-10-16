@@ -2,51 +2,53 @@ package Bank;
 
 import java.util.*;
 
-public class CheckingAccount {
+public class CheckingAccount
+{
 
 	private double balance;
-	private double account;
-	CheckingAccount acc;
-	Scanner read = new Scanner(System.in);
+	private String user;
+	private int SIN;
 	
-	public CheckingAccount() {
-		this.balance = 0.0;
-		this.account = 0;
+	public CheckingAccount()
+	{
 		
-		
-		accountInvariant();
 	}
 	
-	
-	public CheckingAccount(double balance) {
-		
-		this.balance = balance;
-		
+	public CheckingAccount(String user, int SIN)
+	{
+		this.user = user;
+		this.SIN = SIN;
+		this.balance = 0;
 	}
 
 
-	public double withdrawAmount() {
-		this.balance = this.balance - this.account;
-		return this.balance;
+	public int getSIN() {
+		return SIN;
+	}
+
+	public void withdrawAmount(double amount) {
+		this.balance = this.balance - amount;
 	}
 	
-	public void depositAmount(double balance) {
-		this.balance += this.account;
-		this.balance = balance;
+	public void depositAmount(double amount) {
+		this.balance = this.balance + amount;
 	}
 	
-	public void createAccount() {
-		acc = new CheckingAccount();
+	public void createAccount(String user, int SIN) {
+		CheckingAccount acc = new CheckingAccount(user, SIN);
 	}
 	
+	//user initiated
 	public void cancelAccount() {
 		
 	}
 	
+	//bank initiated
 	public void suspendAccount() {
 		
 	}
 	
+	//user initiated
 	public void reactivateAccount() {
 		
 	}
@@ -55,6 +57,7 @@ public class CheckingAccount {
 		return this.balance;
 	}
 	
+	//bank initiated
 	public void terminateAccount() {
 		
 	}
@@ -120,8 +123,9 @@ public class CheckingAccount {
 		
 	}
 	
-	public void transferAmount() {
-		
+	public void transferAmount(int amount, CreditAccount acc) {
+		this.withdrawAmount(amount);
+		acc.depositAmount(amount);
 	}
 	
 	private void accountInvariant(){
