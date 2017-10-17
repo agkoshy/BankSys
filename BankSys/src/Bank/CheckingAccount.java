@@ -3,13 +3,35 @@ package Bank;
 import java.time.Instant;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+
+/**
+ * CheckingAccount class
+ *
+ * This class creates a checking account and manages all things related to it. Such as the manipulation 
+ * of the balance of the account. It also has methods that are invoked by the bank and that can suspend
+ * and terminate the account.
+ *
+ * @author Alvis Koshy, Zhu Su
+ * @version 1.0
+ * @since 2017-10-17
+ */
 public class CheckingAccount
 {
-
+	//Fields
 	private double balance;
 	private int SIN;
 	private Instant timestamp;
 	private final String TYPE = "Chequeing;";
+	
+	DemandAccount demand;
+	ArrayList<AccountActivity> record = new ArrayList<AccountActivity>();
+	
+	JRadioButton radioButton1;
+	JRadioButton radioButton2;
+	JRadioButton radioButton3;
 	
 	public CheckingAccount()
 	{
@@ -22,14 +44,16 @@ public class CheckingAccount
 		this.balance = 0;
 	}
 
-	ArrayList<AccountActivity> record = new ArrayList<AccountActivity>();
 
 	public int getSIN() {
 		return SIN;
 	}
 
+	//Method that withdraws amount from an account
 	public void withdrawAmount(double amount) {
+		this.stateOfBalance();
 		this.balance = this.balance - amount;
+		//records in accountLog, repeated throughout all methods that change the state of the account
 		record.add(new AccountActivity(this.getSIN(), timestamp, TYPE + "Withdraw" , amount));
 	}
 	
@@ -71,67 +95,49 @@ public class CheckingAccount
 		record.add(new AccountActivity(this.getSIN(), timestamp, TYPE + "Termination" , 0));
 	}
 	
-	public int setOverdraftOption() {
+	public void setOverdraftOption() {
+		//Creates a panel to pop up 
+		JPanel overdraft = new JPanel();
 		
-		System.out.println("Choose between No Overdraft Protection(1), Pay Per Use Overdraft Protection(2)"
-				+ "or Monthly Fixed Fee Overdraft Protection(3).");
-		int n = read.nextInt();
-		String y = read.nextLine();
-		System.out.println("Enter an option: " + n);
-		if(n == 1)
-		{
-			//Option 1: No Overdraft Protection
-			System.out.println("Choosing the No Overdraft Protection will mean that you will not be able to"
-					+ "withdraw an amount that will cause the balance in your account to go below 0. In addition,"
-					+ "any such action will result in a fee of $45.00"
-					+ " being charged to your account. Are you sure you would like this option?");
-			System.out.println("Enter an option(Y/N): " + y);
-			do {
-				if (y == "Y") {
-
-				} else if (y == "N") {
-					setOverdraftOption();
-				}
-			} while(y != "Y" || y != "N");
+		//adds the buttons into the panel
+		overdraft.add(radioButton1 = new JRadioButton("No Overdraft Protection"));
+		radioButton1.setActionCommand("No Overdraft Protection");
+		overdraft.add(radioButton2 = new JRadioButton("Pay Per Use Overdraft Protection"));
+		radioButton2.setActionCommand("Pay Per Use Overdraft Protection");
+		overdraft.add(radioButton3 = new JRadioButton("Montly Fixed Fee Overdraft Protection"));
+		radioButton3.setActionCommand("Montly Fixed Fee Overdraft Protection");
+		
+		//Adds the lightweight panel into an optionPane
+		int result = JOptionPane.showConfirmDialog(null, overdraft, "Overdraft options", JOptionPane.OK_CANCEL_OPTION);
+		if (result == JOptionPane.OK_OPTION) {
+			this.stateOfBalance();
 		}
-		else if(n == 2)
-		{
-			//Option 2: Pay Per Use Overdraft Protection
-			System.out.println("Choosing the Pay Per Use Overdraft Protection will mean that you will be charged"
-					+ "a $5.00 fee every time in which an overdraft is created or increased. There is no charge"
-					+ "unless you use this service. Are you sure you would like this option?");
-			System.out.println("Enter an option(Y/N): " + y);
-			do {
-				if (y == "Y") {
-
-				} else if (y == "N") {
-					setOverdraftOption();
-				}
-			} while(y != "Y" || y != "N");
-			
+	}
+		
+	//A method that checks the state of the balance and if it goes below 0. If so then it returns false
+	public boolean stateOfBalance() {
+		//Returns true if the balance is <0 and false otherwise
+		if (radioButton1.isSelected()) {
+			// Checks to see if the balance
+			if (this.getBalance() < 0) {
+				demand.depositAmount(SIN, 45.00);
+				accountInvariant();
+				return true;
+			}
+		} else if (radioButton2.isSelected()) {
+			if (this.getBalance() < 0) {
+				demand.depositAmount(SIN, 5.00);
+				return true;
+			}
+		} else if (radioButton3.isSelected()) {
+			demand.depositAmount(SIN, 4.00);
+				return true;
 		}
-		else if(n == 3)
-		{
-			//Option 3: Monthly Fixed Fee Overdraft Protection
-			System.out.println("Choosing the Monthly Fixed Fee Overdraft Protection will mean that you will be charged"
-					+ "$4.00 every month, regardless of the utilization of the overdraft."
-					+ " Are you sure you would like this option?");
-			System.out.println("Enter an option(Y/N): " + y);
-			do {
-				if (y == "Y") {
-
-				} else if (y == "N") {
-					setOverdraftOption();
-				}
-			} while(y != "Y" || y != "N");
-		}
-		return n;
+		return false;
 		
 	}
-	public void setLimit(double amount) {
-		
-		record.add(new AccountActivity(this.getSIN(), timestamp, TYPE + "New Limit" , amount));
-	}
+	
+
 	
 	public void transferAmount(int amount, CreditAccount acc) {
 		this.withdrawAmount(amount);
@@ -139,6 +145,6 @@ public class CheckingAccount
 	}
 	
 	private void accountInvariant(){
-		assert(balance >= 0) : "Balance must be greater than Zero";
+		assert(balance >= 0) : "Balance must be greater than or equal Zero";
 	}
 }

@@ -8,7 +8,16 @@ import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * AccountActivity class
+ *
+ * This class creates an account log of all the users according to their SIN number. It sorts by that method and checks per day,
+ * month and then saves it into a file which is retrievable.
+ *
+ * @author Alvis Koshy, Zhu Su
+ * @version 1.0
+ * @since 2017-10-17
+ */
 public class AccountActivity {
 	
 	private static final String FILENAME = "accountLog.txt";

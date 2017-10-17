@@ -6,7 +6,16 @@ import java.awt.FlowLayout;
 
 import javax.swing.*;
 
-
+/**
+ * GUI class
+ *
+ * This class is the GUI and possess as the main graphical interface for the program. It is divided into two, one display panel 
+ * and the buttons panel.
+ *
+ * @author Alvis Koshy, Zhu Su
+ * @version 1.0
+ * @since 2017-10-17
+ */
 public class GUI extends JFrame {
 	/**
 	 * 
@@ -16,31 +25,32 @@ public class GUI extends JFrame {
 	JFrame frame = new JFrame("Bank System");
 	JScrollPane scrollPane = new JScrollPane();
 
-	public LeftPanel leftPanel;
 	public RightPanel rightPanel;
+	
+	JTextArea textArea;
 	
 	public GUI() {
 
-		// Create the root panel
 		JPanel buttonContainer = new JPanel();
 		rightPanel = new RightPanel(this);
 		buttonContainer.add(rightPanel);
+		
 		JPanel textContainer = new JPanel();
-		leftPanel = new LeftPanel(this);
-		textContainer.add(leftPanel);
-		textContainer.add(buttonContainer);
-		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new FlowLayout());
-		mainPanel.add(textContainer);
-		frame.setSize(new Dimension(500,500));
-		frame.add(mainPanel);
-	    frame.getContentPane().add(mainPanel, BorderLayout.WEST);
+		textArea = new JTextArea(27, 28);
+		textArea.setEditable(false);
+		
+		frame.setSize(500, 500);
+		scrollPane = new JScrollPane(textArea);
+		textContainer.add(scrollPane);
+		JPanel main = new JPanel();
+		main.add(textContainer);
+		main.add(buttonContainer);
+		main.setLayout(new FlowLayout());
+		frame.add(main);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
 		
-	}
-	public LeftPanel getLeftPanel() {
-		return this.leftPanel;
 	}
 
 	public RightPanel getRightPanel() {

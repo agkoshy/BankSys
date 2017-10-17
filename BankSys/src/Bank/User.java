@@ -6,7 +6,16 @@ import java.awt.event.ActionListener;
 import java.util.*;
 
 import javax.swing.*;
-
+/**
+ * User class
+ *
+ * This class is an extension of a button and acts as an ActionListener, and within it creates a blank canvas with
+ * a new user.
+ *
+ * @author Alvis Koshy, Zhu Su
+ * @version 1.0
+ * @since 2017-10-17
+ */
 
 public class User implements ActionListener{
 	
@@ -18,13 +27,14 @@ public class User implements ActionListener{
 	private GUI gui;
 	private JLabel lblUser = new JLabel("Name: ");
 	private JLabel lblAcc = new JLabel("Choose Account(s): ");
-	private JTextField txtUser = new JTextField(5);
+	static JTextField txtUser = new JTextField(5);
 
 	public static Checkbox checkOne = new Checkbox("Checking Account");
 	public static Checkbox checkTwo = new Checkbox("Credit Account");
+	public int SIN;
 	
 	private JPanel myPanel = new JPanel(new GridLayout(0, 1, 5, 5));
-
+	
 	
 	public User(GUI gui) {
 		this.gui = gui;
@@ -62,32 +72,16 @@ public class User implements ActionListener{
 			}
 			else
 			{
-				// Generates User SIN
-				
-				int SIN = (int) (100000000 + (ran.nextFloat() * 900000000));
-				
-				// Generate Account
-				
-				if (checkOne.getState() == true)
-				{
-					check.createAccount(txtUser.getText(), SIN);
-				}
-				
-				if (checkTwo.getState() == true)
-				{
-					credit.createAccount(txtUser.getText(), SIN);
-				}
 				
 				// Enables buttons to true only after the user initializes
 				gui.getRightPanel().setAccNew(true);
 				gui.getRightPanel().setDeposit(true);
 				gui.getRightPanel().setWithdraw(true);
-				gui.getRightPanel().setCancel(true);
 				gui.getRightPanel().setReactivate(true);
 				gui.getRightPanel().setDay(true);
 				gui.getRightPanel().setMonth(true);
 
-				gui.leftPanel.textArea.setText("");
+				gui.textArea.setText("");
 			}
 		}
 	}
